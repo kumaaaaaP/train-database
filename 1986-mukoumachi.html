@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鉄道編成表管理システム</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    }
+    .timetable th, .timetable td {
+      border: 1px solid #d4d4d8;
+      padding: 0.2rem 0.5rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .timetable th {
+      background-color: #f8fafc;
+      font-weight: normal;
+    }
+    .timetable .header-row th {
+      border-bottom: 2px solid #52525b;
+    }
+    .timetable .no-border {
+      border: none !important;
+      background-color: transparent !important;
+      text-align: right;
+    }
+    .timetable tbody tr:hover {
+      background-color: #fef9c3;
+    }
+    .panto-cell {
+      height: 1.5rem;
+      font-size: 1.2rem;
+      line-height: 1;
+      color: #71717a;
+    }
+    /* ボタンのホバーアニメーション */
+    .home-btn {
+      transition: all 0.2s;
+    }
+    .home-btn:hover {
+      transform: translateX(-4px);
+    }
+  </style>
+</head>
+<body class="p-6 md:p-10 text-zinc-800 bg-white">
+
+  <!-- ナビゲーション (ホームへ戻る) -->
+  <nav class="mb-6">
+    <a href="index.html" class="home-btn inline-flex items-center text-zinc-500 hover:text-zinc-800 font-medium text-sm border border-zinc-200 px-3 py-1.5 rounded-full bg-zinc-50 hover:bg-zinc-100 shadow-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      ホームに戻る
+    </a>
+  </nav>
+
+  <div id="app">
+    <!-- ローディング表示 -->
+    <div id="loading" class="text-center py-20 text-zinc-400">データを読み込み中...</div>
+  </div>
+
+  <script>
+    // 編成データ (JSON形式)
+    const formationData = {
+      meta: {
+        date: "61.11.1 現在",
+        depotName: "向日町運転所",
+        depotCode: "大ムコ",
+        totalCars: 276
+      },
+      sections: [
+        {
+          id: "485_raicho_danran",
+          title: "485系",
+          subtitle: "雷 鳥 [だんらん]",
+          direction: { left: "新潟・富山・金沢", right: "大阪" },
+          columns: ["←10", "9", "8", "7", "6", "5", "4", "3", "2", "1→"],
+          carTypes: ["クハ", "モハ", "モハ", "モハ", "モハ", "サロ", "サロ", "モハ", "モハ", "クハ"],
+          carSeries: ["481", "485", "484", "485", "484", "481", "481", "485", "484", "481"],
+          pantographs: [3, 5, 9], 
+          formations: [
+            { label: "21", numbers: [111, 188, 290, 137, 240, 509, 42, 122, 226, 108] },
+            { label: "22", numbers: [301, 70, 70, 88, 88, 506, 66, 123, 227, 112] },
+            { label: "23", numbers: [253, 132, 236, 1001, 1001, 501, 86, 1004, 1004, 228] },
+            { label: "24", numbers: [117, 147, 249, 142, 245, 502, 70, 76, 76, 254] },
+            { label: "25", numbers: [263, 213, 315, 119, 223, 507, 97, 148, 250, 126] },
+            { label: "26", numbers: [103, 1002, 1002, 183, 285, 505, 62, 80, 80, 120] },
+            { label: "27", numbers: [123, 99, 203, 124, 228, 508, 75, 162, 264, 110] },
+            { label: "", numbers: [115, 106, 210, 210, 312, 504, 74, 143, 246, 316] },
+            { label: "", numbers: [109, 215, 317, 189, 291, 503, 92, 72, 72, 106] }
+          ]
+        },
+        {
+          id: "485_raicho_hokuetsu",
+          title: "485系",
+          subtitle: "雷 鳥 ・ 北 越",
+          direction: { left: "富山・金沢", right: "大阪" },
+          columns: ["←9", "8", "7", "6", "5", "4", "3", "2", "1→"],
+          carTypes: ["クハ", "モハ", "モハ", "モハ", "モハ", "サロ", "モハ", "モハ", "クハ"],
+          carSeries: ["481", "485", "484", "485", "484", "481", "485", "484", "481"],
+          pantographs: [3, 5, 8],
+          formations: [
+            { label: "31", numbers: [223, 75, 75, 139, 242, 84, 187, 289, 314] },
+            { label: "32", numbers: [257, 1003, 1003, 1028, 1028, 46, 1005, 1005, 338] },
+            { label: "33", numbers: [125, 1025, 1025, 130, 234, 68, 1029, 1029, 302] },
+            { label: "34", numbers: [105, 191, 293, 212, 314, 108, 128, 232, 340] },
+            { label: "35", numbers: [113, 141, 244, 125, 229, 71, 73, 73, 304] },
+            { label: "36", numbers: [107, 1006, 1006, 211, 313, 85, 209, 311, 122] },
+            { label: "37", numbers: [101, 1027, 1027, 1026, 1026, 109, 114, 218, 116] },
+            { label: "38", numbers: [119, 131, 235, 190, 292, 49, 81, 81, 114] },
+            { label: "39", numbers: [335, 103, 207, 185, 287, 69, 121, 225, 104] },
+            { label: "40", numbers: [121, 186, 288, 108, 212, 48, 84, 84, 124] },
+            { label: "", numbers: [235, 82, 82, 140, 243, 36, 74, 74, 118] }
+          ]
+        },
+        {
+          id: "583_kitaguni",
+          title: "583系",
+          subtitle: "きたぐに",
+          direction: { left: "新潟・富山", right: "大阪" },
+          columns: ["←12", "11", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1→"],
+          carTypes: ["クハネ", "モハネ", "モハネ", "モハネ", "モハネ", "サロネ", "サロ", "モハネ", "モハネ", "モハネ", "モハネ", "クハネ"],
+          carSeries: ["581", "583", "582", "583", "582", "581", "581", "583", "582", "583", "582", "581"],
+          pantographs: [3, 5, 9, 11],
+          formations: [
+            { label: "", numbers: [33, 38, 38, 46, 46, 2, 27, 71, 71, 85, 85, "3-28"] }
+          ],
+          note: "11/ 1 502M"
+        }
+      ],
+      sidebar: {
+        summary: [
+          {
+            title: "583系",
+            items: [
+              { code: "MN", name: "モハネ583", count: 24 },
+              { code: "M'N", name: "モハネ582", count: 24 },
+              { code: "TNC", name: "クハネ583/581", count: 12 },
+              { code: "TNS", name: "サロネ581", count: 6 },
+              { code: "TS", name: "サロ581", count: 6 }
+            ],
+            total: 72
+          },
+          {
+            title: "485系",
+            items: [
+              { code: "M/M'", name: "モハ485/484", count: 120 },
+              { code: "TC", name: "クハ481", count: 40 },
+              { code: "T", name: "サハ481/489", count: 6 },
+              { code: "TS", name: "サロ481", count: 30 }
+            ],
+            total: 196
+          }
+        ],
+        specialVehicles: [
+          { name: "事業用車", count: 6, items: ["クモヤ443-2＋442-2", "クモヤ145-201", "クモヤ91000/01/02"] },
+          { name: "その他", count: 2, items: ["クヤ153-1", "クモヤ91003"] }
+        ]
+      }
+    };
+
+    function renderApp(data) {
+      const app = document.getElementById('app');
+      app.innerHTML = ''; 
+
+      // ヘッダー生成
+      const header = `
+        <header class="flex flex-col md:flex-row md:justify-between md:items-end border-b-2 border-zinc-800 pb-2 mb-8">
+          <div>
+            <div class="text-base font-bold text-zinc-500 tracking-wider mb-1">${data.meta.date}</div>
+            <h1 class="text-3xl md:text-4xl font-bold tracking-widest">${data.meta.depotName} <span class="text-xl md:text-2xl ml-4 font-normal tracking-normal">${data.meta.depotCode}</span></h1>
+          </div>
+          <div class="text-2xl md:text-3xl font-bold font-serif mt-2 md:mt-0">${data.meta.totalCars}<span class="text-base md:text-lg font-normal font-sans ml-1">両</span></div>
+        </header>
+      `;
+      app.insertAdjacentHTML('beforeend', header);
+
+      const contentWrapper = document.createElement('div');
+      contentWrapper.className = 'flex flex-col lg:flex-row gap-10';
+      
+      const main = document.createElement('main');
+      main.className = 'flex-1 space-y-12';
+      
+      data.sections.forEach(section => {
+        const sectionHtml = `
+          <section>
+            <div class="flex justify-between items-end mb-1">
+              <h2 class="text-xl font-bold flex items-end gap-3">
+                <span class="bg-zinc-800 text-white px-2 py-0.5 text-sm rounded-sm">${section.title}</span>
+                <span class="text-lg tracking-widest">${section.subtitle}</span>
+              </h2>
+              <div class="text-xs text-zinc-500 italic">←${section.direction.left} <span class="inline-block w-20 border-t border-zinc-300 mx-2 mb-1"></span> ${section.direction.right}→</div>
+            </div>
+            <div class="overflow-x-auto pb-2">
+              <table class="timetable w-full text-sm">
+                <thead>
+                  <tr class="panto-row no-border">
+                    <th class="no-border w-10"></th>
+                    ${section.columns.map((_, i) => `<th class="no-border panto-cell">${section.pantographs.includes(i+1) ? '◇' : ''}</th>`).join('')}
+                  </tr>
+                  <tr class="text-xs text-zinc-400">
+                    <th class="no-border"></th>
+                    ${section.columns.map(col => `<th>${col}</th>`).join('')}
+                  </tr>
+                  <tr class="text-xs">
+                    <th class="no-border"></th>
+                    ${section.carTypes.map(type => `<th>${type}</th>`).join('')}
+                  </tr>
+                  <tr class="header-row">
+                    <th class="no-border"></th>
+                    ${section.carSeries.map(ser => `<th class="font-bold">${ser}</th>`).join('')}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${section.formations.map(f => `
+                    <tr>
+                      <th class="no-border pr-3 font-bold text-zinc-500">${f.label}</th>
+                      ${f.numbers.map(num => `<td>${num}</td>`).join('')}
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+            ${section.note ? `<div class="text-right text-xs mt-1 text-zinc-500 font-mono">${section.note}</div>` : ''}
+          </section>
+        `;
+        main.insertAdjacentHTML('beforeend', sectionHtml);
+      });
+
+      const aside = document.createElement('aside');
+      aside.className = 'w-full lg:w-64 flex-shrink-0 space-y-6';
+      
+      let sidebarHtml = `<div class="bg-zinc-50 border border-zinc-200 p-4 rounded shadow-sm text-sm">
+        <h3 class="font-bold border-b border-zinc-300 pb-2 mb-4">形式別配置</h3>`;
+      
+      data.sidebar.summary.forEach(group => {
+        sidebarHtml += `
+          <div class="mb-5 last:mb-0">
+            <div class="font-bold text-blue-800 mb-1 flex justify-between">
+              <span>${group.title}</span>
+              <span>${group.total}両</span>
+            </div>
+            <table class="w-full text-xs text-zinc-600">
+              ${group.items.map(item => `
+                <tr>
+                  <td class="py-0.5">${item.code}</td>
+                  <td>${item.name}</td>
+                  <td class="text-right font-mono">${item.count}</td>
+                </tr>
+              `).join('')}
+            </table>
+          </div>
+        `;
+      });
+      sidebarHtml += `</div>`;
+
+      data.sidebar.specialVehicles.forEach(sv => {
+        sidebarHtml += `
+          <div class="text-sm border-l-4 border-zinc-300 pl-3 py-1">
+            <div class="flex justify-between font-bold text-zinc-700">
+              <span>${sv.name}</span>
+              <span>${sv.count}両</span>
+            </div>
+            <ul class="text-xs text-zinc-500 mt-1 space-y-0.5">
+              ${sv.items.map(i => `<li>・ ${i}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      });
+
+      aside.innerHTML = sidebarHtml;
+      
+      contentWrapper.appendChild(main);
+      contentWrapper.appendChild(aside);
+      app.appendChild(contentWrapper);
+    }
+
+    window.onload = () => {
+      document.getElementById('loading').remove();
+      renderApp(formationData);
+    };
+  </script>
+</body>
+</html>
