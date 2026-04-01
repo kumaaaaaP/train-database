@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JR北海道 / 札幌局 の編成表 - 鉄道編成表アーカイブ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    }
+    .card-hover {
+      transition: all 0.2s ease-in-out;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800 min-h-screen flex flex-col">
+
+  <!-- ヘッダー -->
+  <header class="bg-white border-b border-zinc-200 sticky top-0 z-10 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <a href="index.html" class="text-xl font-bold tracking-wider hover:text-zinc-600 transition">鉄道編成表アーカイブ</a>
+      </div>
+      <nav class="hidden md:flex gap-6 text-sm font-medium text-zinc-600">
+        <a href="#" class="hover:text-zinc-900 transition">年代別</a>
+        <a href="#" class="text-zinc-900 border-b-2 border-zinc-800 pb-1">車両基地別</a>
+        <a href="#" class="hover:text-zinc-900 transition">形式別</a>
+        <a href="#" class="hover:text-zinc-900 transition">このサイトについて</a>
+      </nav>
+      <!-- モバイルメニューボタン (ダミー) -->
+      <button class="md:hidden text-zinc-500 hover:text-zinc-900">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- パンくずリスト -->
+    <nav class="text-sm mb-6 text-zinc-500">
+      <ol class="flex items-center space-x-2">
+        <li><a href="index.html" class="hover:text-zinc-900 transition">ホーム</a></li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </li>
+        <li><a href="#" class="hover:text-zinc-900 transition">会社・地域別</a></li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </li>
+        <li class="text-zinc-800 font-medium">JR北海道 / 札幌局</li>
+      </ol>
+    </nav>
+
+    <!-- ページタイトルセクション -->
+    <div class="bg-white rounded-xl shadow-sm border border-zinc-200 p-6 md:p-8 mb-8 relative overflow-hidden">
+      <!-- 装飾用の背景 -->
+      <div class="absolute -right-10 -top-10 w-40 h-40 bg-green-50 rounded-full opacity-50 pointer-events-none"></div>
+      
+      <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="bg-green-600 text-white text-xs font-bold px-2.5 py-1 rounded-sm tracking-widest">会社・地域別カテゴリー</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">JR北海道 <span class="text-xl md:text-2xl text-zinc-500 font-normal tracking-wide ml-2">/ 国鉄 札幌鉄道管理局 等</span></h2>
+        <p class="text-zinc-600 max-w-3xl leading-relaxed text-sm md:text-base">
+          JR北海道および国鉄時代の北海道内各鉄道管理局（札幌・函館・旭川・釧路・青函）に所属した車両基地の編成表です。極寒地を走り抜けた特急形気動車群、札幌圏の通勤輸送を支える交流電車、道内各地のローカル線を担う気動車などの記録を収録しています。
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- メインリスト -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- 検索・ソートツールバー -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-100 p-3 rounded-lg border border-zinc-200 text-sm gap-3">
+          <div class="text-zinc-600">全 <span class="font-bold text-zinc-900 text-base">15</span> 件の編成表</div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <label for="sort" class="text-zinc-500 whitespace-nowrap">並び替え:</label>
+            <select id="sort" class="bg-white border border-zinc-300 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-zinc-400 w-full sm:w-auto cursor-pointer">
+              <option>年代が新しい順</option>
+              <option>年代が古い順</option>
+              <option>五十音順 (運転所名)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- カードリスト -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <a href="#" class="block bg-white border border-zinc-200 rounded-lg p-5 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+            <div class="text-sm font-bold text-green-600 mb-1">令和6年 (2024年) 4月1日現在</div>
+            <h4 class="text-lg font-bold mb-2">札幌運転所 (札サウ)</h4>
+            <p class="text-sm text-zinc-500 mb-3">789系「カムイ」「ライラック」、733系「エアポート」など札幌圏の主力電車の配置。</p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">789系</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">733系</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">現在</span>
+            </div>
+          </a>
+
+          <a href="#" class="block bg-white border border-zinc-200 rounded-lg p-5 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+            <div class="text-sm font-bold text-green-600 mb-1">平成20年 (2008年) 10月1日現在</div>
+            <h4 class="text-lg font-bold mb-2">函館運輸所 (函ハコ)</h4>
+            <p class="text-sm text-zinc-500 mb-3">「スーパー北斗」用キハ281系、および「スーパー白鳥」用789系基本番台などの配置。</p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">キハ281系</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">789系</span>
+            </div>
+          </a>
+
+          <a href="#" class="block bg-white border border-zinc-200 rounded-lg p-5 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+            <div class="text-sm font-bold text-green-600 mb-1">平成13年 (2001年) 4月1日現在</div>
+            <h4 class="text-lg font-bold mb-2">苗穂運転所 (札ナホ)</h4>
+            <p class="text-sm text-zinc-500 mb-3">道内各地を結ぶ特急用気動車。キハ183系各種、およびキハ283系の初期配置。</p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">キハ183系</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">キハ283系</span>
+            </div>
+          </a>
+
+          <a href="#" class="block bg-white border border-zinc-200 rounded-lg p-5 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-blue-600"></div>
+            <div class="text-sm font-bold text-blue-600 mb-1">昭和61年 (1986年) 11月1日現在</div>
+            <h4 class="text-lg font-bold mb-2">札幌運転区 (札サウ)</h4>
+            <p class="text-sm text-zinc-500 mb-3">国鉄末期。「ライラック」用781系や、札幌圏電化を支えた711系などの配置。</p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">781系</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">711系</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">国鉄時代</span>
+            </div>
+          </a>
+
+          <a href="#" class="block bg-white border border-zinc-200 rounded-lg p-5 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+            <div class="text-sm font-bold text-green-600 mb-1">平成28年 (2016年) 4月1日現在</div>
+            <h4 class="text-lg font-bold mb-2">釧路運輸車両所 (釧クシ)</h4>
+            <p class="text-sm text-zinc-500 mb-3">キハ283系「スーパーおおぞら」や、花咲線・釧網本線向けキハ54形などの配置。</p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">キハ283系</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">キハ54形</span>
+            </div>
+          </a>
+
+          <a href="#" class="block bg-white border border-zinc-200 rounded-lg p-5 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+            <div class="text-sm font-bold text-green-600 mb-1">令和3年 (2021年) 4月1日現在</div>
+            <h4 class="text-lg font-bold mb-2">旭川運転所 (旭アサ)</h4>
+            <p class="text-sm text-zinc-500 mb-3">宗谷本線・石北本線等のローカル輸送を担うキハ40形、キハ54形などの気動車配置。</p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">キハ40形</span>
+              <span class="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs rounded border border-zinc-200">キハ54形</span>
+            </div>
+          </a>
+
+        </div>
+        
+        <!-- ページネーション -->
+        <div class="flex justify-center mt-10">
+          <nav class="flex items-center gap-1">
+            <a href="#" class="px-3 py-2 rounded-md border border-zinc-200 text-zinc-400 cursor-not-allowed bg-zinc-50">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </a>
+            <a href="#" class="px-3.5 py-1.5 rounded-md bg-zinc-800 text-white font-medium">1</a>
+            <a href="#" class="px-3.5 py-1.5 rounded-md border border-zinc-200 text-zinc-600 hover:bg-zinc-50 transition font-medium">2</a>
+            <a href="#" class="px-3 py-2 rounded-md border border-zinc-200 text-zinc-600 hover:bg-zinc-50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </nav>
+        </div>
+
+      </div>
+
+      <!-- サイドバー -->
+      <aside class="space-y-6">
+        
+        <!-- 年代別カテゴリー -->
+        <div class="bg-white rounded-lg border border-zinc-200 p-5 shadow-sm">
+          <h3 class="font-bold border-b border-zinc-200 pb-2 mb-3">年代から探す</h3>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#" class="flex justify-between text-zinc-600 hover:text-blue-600 transition px-2 py-1"><span>国鉄時代 (~1987)</span> <span class="text-zinc-400 font-mono">42</span></a></li>
+            <li><a href="#" class="flex justify-between text-zinc-600 hover:text-blue-600 transition px-2 py-1"><span>JR初期 (1987~1999)</span> <span class="text-zinc-400 font-mono">38</span></a></li>
+            <li><a href="#" class="flex justify-between text-zinc-600 hover:text-blue-600 transition px-2 py-1"><span>2000年代 (2000~2009)</span> <span class="text-zinc-400 font-mono">51</span></a></li>
+            <li><a href="#" class="flex justify-between text-zinc-600 hover:text-blue-600 transition px-2 py-1"><span>2010年代 (2010~2019)</span> <span class="text-zinc-400 font-mono">64</span></a></li>
+            <li><a href="#" class="flex justify-between text-zinc-600 hover:text-blue-600 transition px-2 py-1"><span>現在 (2020~)</span> <span class="text-zinc-400 font-mono">28</span></a></li>
+          </ul>
+        </div>
+
+        <!-- 地域・会社別カテゴリー -->
+        <div class="bg-white rounded-lg border border-zinc-200 p-5 shadow-sm">
+          <h3 class="font-bold border-b border-zinc-200 pb-2 mb-3">会社・地域から探す</h3>
+          <ul class="space-y-2.5 text-sm text-zinc-600">
+            <li>
+              <a href="#" class="flex justify-between font-bold text-green-700 bg-green-50 border border-green-100 -mx-2 px-2 py-1 rounded">
+                <span class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+                  JR北海道 / 札幌局
+                </span>
+                <span class="text-green-600/70 font-mono font-normal">15</span>
+              </a>
+            </li>
+            <li><a href="#" class="flex justify-between hover:text-green-600 transition px-2 py-1"><span>JR東日本 / 東京・仙台等</span> <span class="text-zinc-400 font-mono">72</span></a></li>
+            <li><a href="#" class="flex justify-between hover:text-orange-500 transition px-2 py-1"><span>JR東海 / 静岡・名古屋等</span> <span class="text-zinc-400 font-mono">24</span></a></li>
+            <li><a href="#" class="flex justify-between hover:text-blue-600 transition px-2 py-1"><span>JR西日本 / 大阪・米子等</span> <span class="text-zinc-400 font-mono">58</span></a></li>
+            <li><a href="#" class="flex justify-between hover:text-blue-400 transition px-2 py-1"><span>JR四国 / 四国総局</span> <span class="text-zinc-400 font-mono">12</span></a></li>
+            <li><a href="#" class="flex justify-between hover:text-red-600 transition px-2 py-1"><span>JR九州 / 門司局</span> <span class="text-zinc-400 font-mono">21</span></a></li>
+            <li><a href="#" class="flex justify-between hover:text-purple-600 transition px-2 py-1"><span>JR貨物 / 機関区</span> <span class="text-zinc-400 font-mono">18</span></a></li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="bg-zinc-900 text-zinc-400 py-8 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-sm">
+        &copy; 2026 鉄道編成表アーカイブ. All rights reserved.
+      </div>
+      <div class="flex gap-5 text-sm">
+        <a href="#" class="hover:text-white transition">利用規約</a>
+        <a href="#" class="hover:text-white transition">プライバシーポリシー</a>
+        <a href="#" class="hover:text-white transition">お問い合わせ</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
